@@ -79,7 +79,7 @@ router.get("/workplaces", async (req, res, next) => {
 
 //Read (by id)
 
-router.get("/workplaces/:id", async (req, res, next) => {
+router.get("/workplaces/:id", isAuthenticated, async (req, res, next) => {
   const { id } = req.params;
 
   try {
@@ -116,7 +116,7 @@ router.put("/workplaces/:id", isAuthenticated, async (req, res, next) => {
 
 //Delete
 
-router.delete("/workplaces/:id", async (req, res, next) => {
+router.delete("/workplaces/:id", isAuthenticated, async (req, res, next) => {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
