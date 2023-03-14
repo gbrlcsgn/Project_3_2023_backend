@@ -46,6 +46,25 @@ router.post("/users/:userId/:workplaceId/favorites", async (req, res) => {
   }
 });
 
+//Delete a favorite
+
+router.delete("/user/favorite/:id", async (req, res, next) => {
+  let { id } = req.params;
+  let currentUser = req.payload._id;
+  console.log(id);
+  console.log(currentUser);
+
+  try {
+    const removeFavorite = await User.findByIdAndUpdate(currentUser, {
+      $pull: { favoriteWorkplaces: id },
+    });
+
+    res.json({ message: `Favorite with the id ${id} deleted successfully` });
+  } catch (error) {
+    res.json(error);
+  }
+});
+
 //show user profile - created and favorites
 
 router.get("/user/:id", async (req, res, next) => {
